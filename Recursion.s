@@ -1,18 +1,22 @@
 #My ID: 02876360 %11 = 3 +26 = Base 29
 
 .data
-user_input: .space 1001	   #makes 1000 spaces for the user input
+user_input: .space 101	   #makes 1000 spaces for the user input
 endl: .asciiz "\n"	   #makes asciiz character for a new line
-NaN_msg: .asciiz "NaN" 	   #makes asciiz NaN message
-comma_msg: .asciiz ","      #makes asciiz comma character
+invalid_msg: .asciiz "Invalid input" 	   #makes asciiz invalid input message
+
+comma_msg: .asciiz ","      #makes asciiz comma character 
 
 .text
 
 main:
 li $v0,8 	      # takes in and reads input
 la $a0, user_input    #puts the users input into the $a0 register
-li $a1, 1001          #takes in 1000 spaces from the user input even though it says 1001 (NULL)
+li $a1, 101          #takes in 1000 spaces from the user input even though it says 1001 (NULL)
 syscall
+
+j invalidprint
+
 jal Subprogram_A      #unconditional jump to subprogram_A
 
 continue_1:
@@ -165,9 +169,8 @@ comma:
 	j done
 invalidprint:
 	li $v0, 4
-	la $a0, NaN_msg 	#prints naN_msg
+	la $a0, invalid_msg 	#prints invalid_msg
 	syscall	
-	j comma 		#jumps to print a comma
 Exit:
 	li $v0, 10		# exits program
 	syscall
