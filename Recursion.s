@@ -5,22 +5,23 @@ user_input: .space 101	   #makes 1000 spaces for the user input
 endl: .asciiz "\n"	   #makes asciiz character for a new line
 invalid_msg: .asciiz "Invalid input" 	   #makes asciiz invalid input message
 
-comma_msg: .asciiz ","      #makes asciiz comma character 
 
 .text
-
+.globl main 
 main:
 li $v0,8 	      # takes in and reads input
 la $a0, user_input    #puts the users input into the $a0 register
-li $a1, 101          #takes in 1000 spaces from the user input even though it says 1001 (NULL)
 syscall
+li $t0, 32					#allocating space into $t3
+li $t1, 0					#setting counter i = 0					
+li $s0, 0					#counter to keep track of previous character. initialized at 0
+la $t3, user_input				#loading userInput address into register
 
-j invalidprint
 
-jal Subprogram_A      #unconditional jump to subprogram_A
 
-continue_1:
-	j print 	#jumps to print loop
+
+
+
 
 #########################Subprograms##################################################
 Subprogram_A:
