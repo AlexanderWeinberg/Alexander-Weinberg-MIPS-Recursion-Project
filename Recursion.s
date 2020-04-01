@@ -178,6 +178,11 @@ jr $ra
 char_to_Decimal:		
 li $t1, 65
 li $t0, 90
+blt $a0, $t1, skip_converting_CAP_to_digital	 # checks if ascii of char >= 65 
+bgt $a0, $t0, skip_converting_CAP_to_digital	#checks if char <= 85
+addi $a0, $a0, -55				#subtract 55 to get the decimal equivalent of A-S
+move $v0, $a0									
+jr $ra
 
 
 
@@ -236,22 +241,7 @@ insubstring:
 	li $t2,0 		#resets the space and tabs checker back to 0
 	j loop			#jumps to loop function
 
-substring:
-	bgt $t2,0,insubstring 	#checks to see if there were any spaces or tabs in between valid characters
-	bge $t3,5,insubstring 	#checks to see if there are more than 4 for characters
-	addi $t1,$t1,1 		#adds 1 to register to track of the amount substring 	
-	sub $sp, $sp,4 		# subtracts to creates space in the stack
-	sw $t6, 0($sp) 		#stores what was in $t6 into the stack
-	move $t6,$t0  		# store the pointer to the bit after the comma character
-	lw $t4,0($sp) 		#loads the value in the stack at that posistion into $t4 register
-	li $s1,0 		#sets $s1 register to 0 
-	jal Subprogram_B	#jumps to Subprogram_B
-	lb $s0, ($t0) 		# loads the bit that $t0 position is pointing to
-	beq $s0, 0, continue_1 	# check if the bit is Null character
-	beq $s0, 10, continue_1 #checks if the bit is a new line character
-	beq $s0,44, invalid_loop#checks if the next bit is comma character
-	li $t2,0 		#resets my space and tabs register to 0
-	j loop			#jumps back up to loop
+
 
 
 #############################################################################
