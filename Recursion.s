@@ -170,6 +170,16 @@ move $t7, $v0
 li $t1,29									
 mul $v0, $t1, $t7			#puts a multiplied result into $v0
 
+leave_num_power:
+lw $ra, 0($sp)			#restores address
+addi $sp, $sp, 4						
+jr $ra
+		
+char_to_Decimal:		
+li $t1, 65
+li $t0, 90
+
+
 
 
 ###########################################################################
