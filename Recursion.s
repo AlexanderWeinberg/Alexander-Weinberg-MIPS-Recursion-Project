@@ -112,7 +112,16 @@ sw $s0, 4($sp)				#s0 is used for the address of array
 sw $s1, 8($sp)							
 sw $s2, 12($sp)
 sw $s3, 16($sp)								
-
+move $s0, $a0							
+move $s1, $a1		
+li $t3, 1
+bne $s1, $t3, PassFunction		#checks if length is equal 1
+lb $t7, 0($s0)				#loads the first element of the array
+move $a0, $t7				#sets the character to the argument for character to Decimal function
+jal char_to_Decimal
+move $t7, $v0				#gets result	
+move $t3, $t7				#sets the first element into $t3, before it's returned
+j conversion_Exit
 
 
 ###########################################################################
