@@ -194,6 +194,16 @@ move $v0, $a0
 jr $ra
 
 
+skip_converting_lower_to_digital:
+
+li $t1, 48													
+li $t0, 57					#checks least and largest ascii value for integers 0-9
+blt $a0, $t1, skip_converting_digital_to_integer#converts if asczii >= 48 
+bgt $a0, $t0, skip_converting_digital_to_integer#checks if asccii <= 57
+addi $a0, $a0, -48				#gets the decimal value of the ascii number
+move $v0, $a0
+jr $ra	
+
 
 ###########################################################################
 
@@ -216,25 +226,6 @@ loop:
 	beq $s0, 10, substring 	#checks if bit is a new line, if so goes to substring 	
 	addi $t0,$t0,1 		#move the $t0 to the next element of the string array	
 	beq $s0, 44, substring 	#check if bit is comma character
-
-gap:
-	addi $t2,$t2,-1 	#adds -1 to register to keeps track of spaces and tabs 
-	j loop			#jumps to loop function
-
-vaild:
-	addi $t3, $t3,1 	#adds 1 to register to keep track of how many valid characters are in the substring
-	mul $t2,$t2,$t7 	#if there was a space before a this valid character it will change $t2 to a positive number
-	j loop 			#jumps to the beginning of loop	
-
-invalid_loop:
-	lb $s0, ($t0) 			# loads the bit that the position $t0 is pointing to
-	beq $s0, 0, insubstring		# check if the bit is Null
-	beq $s0, 10, insubstring	#checks if the bit is a New line character 	
-	addi $t0,$t0,1 			#move the position if $t0 to the next element of the string array	
-	beq $s0, 44, insubstring 	#check if bit is a comma character
-	#addi $t3, $t3,1 		#adds 1 to register to keep track of how many valid characters are in the substring
-	j invalid_loop 			#jumps to the beginning of loop
-
 
 
 #############################################################################
