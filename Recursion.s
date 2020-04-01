@@ -93,7 +93,14 @@ addi $sp, $sp, -8
 sw $s0, 0($sp)				#sets address of start of the number
 sw $t4, 4($sp)				#sets length of the number
 jal conversionFunction
-
+lw $t3, 0($sp)
+addi $sp, $sp, 4		
+li $v0, 1									
+move $a0, $t3
+syscall						#displays result		
+lw $ra, 0($sp)					#restores return address
+addi $sp, $sp, 4						
+jr $ra
 
 
 
@@ -118,17 +125,6 @@ loop:
 	beq $s0, 10, substring 	#checks if bit is a new line, if so goes to substring 	
 	addi $t0,$t0,1 		#move the $t0 to the next element of the string array	
 	beq $s0, 44, substring 	#check if bit is comma character
-check:
-	bgt $t2,0,invalid_loop 		#checks if there were any spaces or tabs in between valid characters
-	beq $s0, 9,  gap 		#checks if there is a tab characters
-	beq $s0, 32, gap 		#checks if there is a space character
-	ble $s0, 47, invalid_loop 	#checks if the ascii less than 48
-	ble $s0, 57, vaild 		#checks if the ascii less than 57 for integers
-	ble $s0, 64, invalid_loop 	#checks if the ascii less than 64
-	ble $s0, 83, vaild		#checks if the ascii less than 83 for Capital letters
-	ble $s0, 96, invalid_loop 	#checks if the ascii less than 96
-	ble $s0, 115, vaild 		#checks if the ascii less than 115 for lowercase letters
-	bge $s0, 116, invalid_loop 	#checks if the ascii greater than 115
 
 gap:
 	addi $t2,$t2,-1 	#adds -1 to register to keeps track of spaces and tabs 
