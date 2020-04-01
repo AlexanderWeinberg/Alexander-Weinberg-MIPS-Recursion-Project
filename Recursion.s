@@ -143,6 +143,18 @@ lw $t3, 0($sp)
 addi $sp, $sp, 4		
 add $t3, $s2, $t3		#conversion results plus the first number and returns the value into $t3
 
+conversion_Exit:
+lw $ra, 0($sp)								
+lw $s0, 4($sp)						
+lw $s1, 8($sp)								
+lw $s2, 12($sp)							
+lw $s3, 16($sp)
+addi $sp, $sp, 20							
+addi $sp, $sp, -4
+sw $t3, 0($sp)
+jr $ra
+
+
 
 
 ###########################################################################
@@ -215,15 +227,7 @@ substring:
 	beq $s0,44, invalid_loop#checks if the next bit is comma character
 	li $t2,0 		#resets my space and tabs register to 0
 	j loop			#jumps back up to loop
-Subprogram_B:
-	beq $t3,0,finish 	#check how many charcter are left to convert 
-	addi $t3,$t3,-1 	#adds -1 to decreases the amount of charaters left to convert
-	lb $s0, ($t4) 		#loads the bit in that position
-	addi $t4,$t4,1		# moves to the next element in the string array
-	j Subprogram_C 		#jumps to Subprogram_C
-continue_2:
-	sw $s1,0($sp)		#stores the converted number
-	j Subprogram_B		#jumps to Subprogram_B
+
 
 #############################################################################
 
