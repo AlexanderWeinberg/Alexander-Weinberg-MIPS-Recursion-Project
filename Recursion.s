@@ -74,7 +74,14 @@ syscall						#print invalid_msg_error if character is greater than4
 li $v0, 10
 syscall
 		
-
+longInputFunction: 
+bne $t4, $zero, emptyStringFunction   		#checks if user input is empty
+beq $t7, $t5, emptyStringFunction     		#checks if the user input is a newline
+li $v0, 4
+la $a0, invalid_msg
+syscall
+li $v0, 10
+syscall
 
 
 
