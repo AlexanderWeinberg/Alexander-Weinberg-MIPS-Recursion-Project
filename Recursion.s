@@ -84,6 +84,18 @@ li $v0, 10
 syscall
 
 
+emptyStringFunction:
+la $s0, user_input
+add $s0, $s0, $t6			#gets the address of the start of the number
+addi $sp, $sp, -4			#allocate 4 points space
+sw $ra, 0($sp)						
+addi $sp, $sp, -8		
+sw $s0, 0($sp)				#sets address of start of the number
+sw $t4, 4($sp)				#sets length of the number
+jal conversionFunction
+
+
+
 
 ###########################################################################
 
