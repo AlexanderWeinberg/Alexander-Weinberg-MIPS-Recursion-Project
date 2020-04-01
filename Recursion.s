@@ -184,6 +184,14 @@ addi $a0, $a0, -55				#subtract 55 to get the decimal equivalent of A-S
 move $v0, $a0									
 jr $ra
 
+skip_converting_CAP_to_digital:
+li $t1, 97												
+li $t0, 121					#checks least and largest ascii value for lowercase a - y
+blt $a0, $t1, skip_converting_lower_to_digital	#checks if value >= 85 
+bgt $a0, $t0, skip_converting_lower_to_digital	#checks if value <= 117
+addi $a0, $a0, -87										
+move $v0, $a0
+jr $ra
 
 
 
@@ -226,21 +234,6 @@ invalid_loop:
 	beq $s0, 44, insubstring 	#check if bit is a comma character
 	#addi $t3, $t3,1 		#adds 1 to register to keep track of how many valid characters are in the substring
 	j invalid_loop 			#jumps to the beginning of loop
-
-
-insubstring:
-	addi $t1,$t1,1 		#adds 1 to register to keeps track of the amount substring 	
-	sub $sp, $sp,4		#subtracts room to create space in the stack
-	sw $t7, 0($sp) 		#stores what was in $t6 register into the stack
-	move $t6,$t0  		#store the pointer to the bit after the comma character
-	lb $s0, ($t0) 		#loads the bit that $t0 position is pointing to
-	beq $s0, 0, continue_1	#check if the bit is Null character
-	beq $s0, 10, continue_1 #checks if the bit is a new line character
-	beq $s0,44, invalid_loop#checks if the next bit is a comma character
-	li $t3,0 		#resets the amount of valid characters back to 0
-	li $t2,0 		#resets the space and tabs checker back to 0
-	j loop			#jumps to loop function
-
 
 
 
