@@ -124,6 +124,18 @@ move $t3, $t7				#sets the first element into $t3, before it's returned
 j conversion_Exit
 
 
+PassFunction:
+addi $s1, $s1, -1								
+move $a0, $s1			#sets arguments for exponentFunction
+jal exponentFunction
+move $s3, $v0								
+lb $t3, 0($s0)			#loads the first element of the array for use
+move $a0, $t3
+jal char_to_Decimal
+move $t3, $v0
+mul $s2, $t3, $s3
+addi $s0, $s0, 1
+
 ###########################################################################
 
 start:
@@ -203,28 +215,6 @@ Subprogram_B:
 continue_2:
 	sw $s1,0($sp)		#stores the converted number
 	j Subprogram_B		#jumps to Subprogram_B
-Subprogram_C:
-	move $t8, $t3	   	#stores the amount of characters left to use as an exponent in register $t3
-	li $t9, 1	    	#set register $t9 (which is currently 29 ) equal to 1
-	ble $s0, 57, number 	#sorts the bit to the number function
-	ble $s0, 84, valid_CAP	#sorts the bit to the valid_CAP function
-	ble $s0, 116, valid_low	#sorts the bit to the valid_low function
-number:
-	sub $s0, $s0, 48	#subtracts from ascii value to convert bit to decimal
-	beq $t3, 0, combine	# if there are no charaters left, the exponent is 0
-	li $t9, 29		#29 for my Base-29
-	j exponent		#jumps to exponent loop
-valid_CAP:
-	sub $s0, $s0, 55 	#converts uppercase bits
-	beq $t3, 0, combine 	# if there are no charaters left, the exponent is 0
-	li $t9, 29		#29 for my Base-29
-	j exponent		#jumps to exponent loop
-valid_low:
-	sub $s0, $s0, 87 	#converts lowercase bits
-	beq $t3, 0, combine 	# if there are no charaters left, the exponent is 0 
-	li $t9, 29		#29 for my Base-29
-	j exponent		#jumps to exponent loop
-
 
 #############################################################################
 
