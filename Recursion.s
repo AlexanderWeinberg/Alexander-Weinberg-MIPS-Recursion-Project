@@ -1,4 +1,4 @@
-#My ID: 02876360 %11 = 3 +26 = Base 29
+#My ID: 02876360 % 11 = 3 +26 = Base 29
 
 .data
 user_input: .space 101	   #makes 1000 spaces for the user input
@@ -195,7 +195,6 @@ jr $ra
 
 
 skip_converting_lower_to_digital:
-
 li $t1, 48													
 li $t0, 57					#checks least and largest ascii value for integers 0-9
 blt $a0, $t1, skip_converting_digital_to_integer#converts if asczii >= 48 
