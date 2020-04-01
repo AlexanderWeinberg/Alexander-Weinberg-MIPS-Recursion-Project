@@ -51,7 +51,7 @@ li $v0, 10
 syscall
 		
 skip_Spaces:
-beq $t7, $t0, spaceFunc		#branch if the current character is a space otherwise continue
+beq $t7, $t0, spaceFunction		#branch if the current character is a space otherwise continue
 addi $t4, $t4, 1		#number of characters + 1
 
 spaceFunction:
@@ -204,29 +204,11 @@ addi $a0, $a0, -48				#gets the decimal value of the ascii number
 move $v0, $a0
 jr $ra	
 
+skip_converting_digital_to_integer:	
+li $v0, 4
+la $a0, invalid_msg
+syscall
+li $v0, 10
+syscall
 
-###########################################################################
-
-start:
-	li $t2,0 	#register used to check for space or tabs within the input
-	li $t7, -1 	#register used for invaild input
-	lb $s0, ($t0) 	# loads the bit that $t0 is pointing to
-	#beq $s0, 0, finish 	#if value is equal to zero jumps to finish loop
-	beq $s0, 9, skip 	#checks if the bit is a tabs character 
-	beq $s0, 32, skip 	#checks if the bit is a space character
-	move $t6, $t0 		#store the valid character that is not space or tab
-	j loop 			#jumps back to the beginning of the loop function
-
-skip:			#skips the bit if its a space or tab
-	addi $t0,$t0,1 	#move the $t0 to the next charracter in the string array
-	j start 	#jumps to start loop
-loop:
-	lb $s0, ($t0) 		#loads the bit that the position of $t0 is pointing to
-	beq $s0, 0, substring	#checks if bit is Null, if so goes to substring
-	beq $s0, 10, substring 	#checks if bit is a new line, if so goes to substring 	
-	addi $t0,$t0,1 		#move the $t0 to the next element of the string array	
-	beq $s0, 44, substring 	#check if bit is comma character
-
-
-#############################################################################
 
