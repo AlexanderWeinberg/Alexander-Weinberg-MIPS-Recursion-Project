@@ -97,16 +97,21 @@ lw $t3, 0($sp)
 addi $sp, $sp, 4		
 li $v0, 1									
 move $a0, $t3
-syscall						#displays result		
-lw $ra, 0($sp)					#restores return address
+syscall					#displays result		
+lw $ra, 0($sp)				#restores return address
 addi $sp, $sp, 4						
 jr $ra
 
 conversionFunction:
-
 lw $a0, 0($sp)
 lw $a1, 4($sp)
 addi $sp, $sp, 8	
+addi $sp, $sp, -20							
+sw $ra, 0($sp)								
+sw $s0, 4($sp)				#s0 is used for the address of array			
+sw $s1, 8($sp)							
+sw $s2, 12($sp)
+sw $s3, 16($sp)								
 
 
 
