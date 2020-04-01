@@ -102,6 +102,12 @@ lw $ra, 0($sp)					#restores return address
 addi $sp, $sp, 4						
 jr $ra
 
+conversionFunction:
+
+lw $a0, 0($sp)
+lw $a1, 4($sp)
+addi $sp, $sp, 8	
+
 
 
 ###########################################################################
