@@ -26,6 +26,12 @@ beq $t7, $t5, breakFunc			#breaks if character is a newline character
 
 #branch instructions for different conditions
 
+beq $t7, $t0, skip_Spaces        #if mycharacter is not a space and...
+bne $s0, $t0, skip_Spaces        #if the previous checked character is a space and..
+beq $t4, $0, skip_Spaces         #if the number of previously checked characters are not zero and..
+beq $t7, $0, skip_Spaces         #character is not null and..
+beq $t7, $t5, skip_Spaces        #the character is not a new line then proceed else skip to the skip_Spaces label
+	
 
 
 
