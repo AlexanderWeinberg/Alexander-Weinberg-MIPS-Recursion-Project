@@ -43,6 +43,20 @@ la $a0,invalid_msg
 syscall									
 jr $ra	
 
+inValidFunction:
+li $v0, 4
+la $a0, invalid_msg
+syscall			
+li $v0, 10
+syscall
+		
+skip_Spaces:
+beq $t7, $t0, spaceFunc		#branch if the current character is a space otherwise continue
+addi $t4, $t4, 1						#number of characters + 1
+
+
+
+
 
 
 
