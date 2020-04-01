@@ -22,7 +22,7 @@ li $t6, 0					#second counter to track number of spaces before actual input
 
 LoopingFunction:
 lb $t7, 0($t3)				#gets string input
-beq $t7, $t5, breakFunc			#breaks if character is a newline character
+beq $t7, $t5, breakFunction			#breaks if character is a newline character
 
 #branch instructions for different conditions
 
@@ -65,7 +65,15 @@ addi $t3, $t3, 1			#increments the address
 addi $t1, $t1, 1			#increments i
 j LoopingFunction
 
-
+breakFunction:
+li $t7, 4
+ble $t4, $t7, longInputFunction			#checks if userInput is greaterthan 4
+li $v0, 4
+la $a0, invalid_msg
+syscall						#print invalid_msg_error if character is greater than4
+li $v0, 10
+syscall
+		
 
 
 
@@ -181,21 +189,6 @@ valid_low:
 	beq $t3, 0, combine 	# if there are no charaters left, the exponent is 0 
 	li $t9, 29		#29 for my Base-29
 	j exponent		#jumps to exponent loop
-exponent:
-				#raises my base to a specific exponent by muliplying itself repeatly
-	ble $t8, 1, combine	#if the exponet is 1, no need to multiply the base by itself anymore
-	mul $t9, $t9, 29 	# multpling base by itself to simulate raising the number to a power
-	addi $t8, $t8, -1	# adding -1 to decrease the exponent
-	j exponent		#jumps to exponent loop
-combine:
-	mul $s2, $t9, $s0	#multiplied the converted bit and base raised to a power
-	add $s1,$s1,$s2		# adding the coverted numbers together to get actual output 
-	j continue_2		#jumps too continue_2 loop
-finish : jr $ra			#jumps back to substring
-
-print:
-	mul $t1,$t1,4 		#multiply $t1 register to get the amount of space needed to move sp to the beginning of stack
-	add $sp, $sp $t1 	#adding register to sp to move the stack pointer to the beginning of the stack	
 
 
 #############################################################################
