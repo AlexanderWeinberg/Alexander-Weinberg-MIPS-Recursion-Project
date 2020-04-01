@@ -16,7 +16,15 @@ li $t0, 32					#allocating space into $t3
 li $t1, 0					#setting counter i = 0					
 li $s0, 0					#counter to keep track of previous character. initialized at 0
 la $t3, user_input				#loading userInput address into register
+li $t4, 0					#number of characters = 0
+li $t5, 10					#loaded new line into $t5
+li $t6, 0					#second counter to track number of spaces before actual input
 
+LoopingFunction:
+lb $t7, 0($t3)				#gets string input
+beq $t7, $t5, breakFunc			#breaks if character is a newline character
+
+#branch instructions for different conditions
 
 
 
