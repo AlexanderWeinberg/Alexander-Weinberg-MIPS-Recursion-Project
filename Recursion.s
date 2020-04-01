@@ -52,8 +52,18 @@ syscall
 		
 skip_Spaces:
 beq $t7, $t0, spaceFunc		#branch if the current character is a space otherwise continue
-addi $t4, $t4, 1						#number of characters + 1
+addi $t4, $t4, 1		#number of characters + 1
 
+spaceFunction:
+bne $t7, $t0, spaceCounterFunction	#checks if current character is a space
+bne $t4, $0, spaceCounterFunction			
+addi $t6, $t6, 1
+		
+spaceCounterFunction:
+move $s0, $t7				#sets previous character to the current one
+addi $t3, $t3, 1			#increments the address
+addi $t1, $t1, 1			#increments i
+j LoopingFunction
 
 
 
@@ -187,12 +197,6 @@ print:
 	mul $t1,$t1,4 		#multiply $t1 register to get the amount of space needed to move sp to the beginning of stack
 	add $sp, $sp $t1 	#adding register to sp to move the stack pointer to the beginning of the stack	
 
-invalidprint:
-	li $v0, 4
-	la $a0, invalid_msg 	#prints invalid_msg
-	syscall	
-Exit:
-	li $v0, 10		# exits program
-	syscall
+
 #############################################################################
 
