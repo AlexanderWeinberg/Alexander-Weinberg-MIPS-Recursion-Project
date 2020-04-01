@@ -32,18 +32,22 @@ beq $t4, $0, skip_Spaces         #if the number of previously checked characters
 beq $t7, $0, skip_Spaces         #character is not null and..
 beq $t7, $t5, skip_Spaces        #the character is not a new line then proceed else skip to the skip_Spaces label
 	
+#if input is invalid_msg && invalid_msg, choose invalid_msg 
+		
+sub $t3, $t1, $t6								
+addi $t3, $t3, 1		 #increments register by 1
+li $t7, 4										
+ble $t3, $t7, inValidFunction     		
+li $v0, 4
+la $a0,invalid_msg		
+syscall									
+jr $ra	
 
 
 
 
+###########################################################################
 
-#########################Subprograms##################################################
-Subprogram_A:
-	sub $sp, $sp,4 	#creates space in the stack by subtracting
-	sw $a0, 0($sp) 	#stores user_input into the stack
-	lw $t0, 0($sp) 	#stores the user_input into $t0 register
-	addi $sp,$sp,4 	#moves the stack pointer four spaces up
-	move $t6, $t0 	#stores the begining of the input into $t6 register
 start:
 	li $t2,0 	#register used to check for space or tabs within the input
 	li $t7, -1 	#register used for invaild input
@@ -168,20 +172,7 @@ finish : jr $ra			#jumps back to substring
 print:
 	mul $t1,$t1,4 		#multiply $t1 register to get the amount of space needed to move sp to the beginning of stack
 	add $sp, $sp $t1 	#adding register to sp to move the stack pointer to the beginning of the stack	
-done:	
-	sub $t1, $t1,4		#keeping track of amount of elements left
-	sub $sp,$sp,4 		#moving the sp to the next element	
-	lw $s7, 0($sp)		#storing that value into register $s7
-	beq $s7,-1,invalidprint #checks to see if element is invalid	
-	li $v0, 1
-	lw $a0, 0($sp)		 #prints element from stack
-	syscall
-comma:
-	beq $t1, 0,Exit 	#if there are no elements left it exits the program
-	li $v0, 4
-	la $a0, comma_msg 	#prints the comma_msg
-	syscall
-	j done
+
 invalidprint:
 	li $v0, 4
 	la $a0, invalid_msg 	#prints invalid_msg
