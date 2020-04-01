@@ -155,6 +155,14 @@ sw $t3, 0($sp)
 jr $ra
 
 
+exponentFunction:
+addi $sp, $sp, -4			#allocates 4 points of space
+sw $ra, 0($sp)				#stores returning address		
+li $t3, 0
+bne $a0, $t3, Ignore_zero_expo
+li $v0, 1
+j leave_num_power
+
 
 
 ###########################################################################
