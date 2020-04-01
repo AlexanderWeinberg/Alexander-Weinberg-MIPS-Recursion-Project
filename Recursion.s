@@ -134,7 +134,16 @@ move $a0, $t3
 jal char_to_Decimal
 move $t3, $v0
 mul $s2, $t3, $s3
-addi $s0, $s0, 1
+addi $s0, $s0, 1              #increments pointer to the start of the array
+addi $sp, $sp, -8
+sw $s0, 0($sp)
+sw $s1, 4($sp)
+jal conversionFunction
+lw $t3, 0($sp)
+addi $sp, $sp, 4		
+add $t3, $s2, $t3		#conversion results plus the first number and returns the value into $t3
+
+
 
 ###########################################################################
 
