@@ -162,6 +162,13 @@ li $t3, 0
 bne $a0, $t3, Ignore_zero_expo
 li $v0, 1
 j leave_num_power
+ 
+Ignore_zero_expo:
+addi $a0, $a0, -1			#setting up argument for recursion 
+jal exponentFunction
+move $t7, $v0
+li $t1,29									
+mul $v0, $t1, $t7			#puts a multiplied result into $v0
 
 
 
